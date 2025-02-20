@@ -10,18 +10,14 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
-    <!-- Icons -->
-    <link rel="stylesheet" href="{{ url('/vendors/fontawesome/css/all.min.css') }}">
-
-    <!-- Scripts -->
-    {{-- @routes --}}
-     {{-- @vite('resources/js/app.js') --}}
-    {{-- @inertiaHead --}}
+    <!-- Vite -->
+    @vite(['resources/js/app.js', 'resources/css/app.css'])
 </head>
 
-<body class="font-sans antialiased" style="margin-bottom: 0;">
-    <h1>CONFIG APP JS ĐI 2 BỐ</h1>
-    {{-- @inertia --}}
+<body class="font-sans antialiased">
+    <div id="app">
+        <app></app>
+    </div>
 </body>
 
 </html>
