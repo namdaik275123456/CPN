@@ -6,6 +6,8 @@
 
         <router-view />
 
+        <i class="fas fa-wreath"></i>
+
         <div class="a">
             <div class="b">
                 Ahgihi: {{ getCampus }}
@@ -15,6 +17,8 @@
 </template>
 
 <script>
+import CONSTANTS from '@/constants';
+
 export default {
     name: 'App',
     computed: {
@@ -24,6 +28,8 @@ export default {
     },
     created() {
         console.log(this.$helpers.isNumber('1'));
+        console.log(CONSTANTS);
+        console.log(this.$constants);
     }
 }
 </script>
