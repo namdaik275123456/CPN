@@ -15,13 +15,10 @@ use Inertia\Inertia;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-Route::get('/', function () {
+Route::get('/{any}', function () {
     return view('app');
-});
+})->where('any', '.*');
+
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified', "activity.log"])->group(function () {
 

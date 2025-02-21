@@ -1,17 +1,29 @@
-import Vue from 'vue/dist/vue.esm.js';
-import VueRouter from 'vue-router';
+import Vue from "vue/dist/vue.esm.js";
+import VueRouter from "vue-router";
 
-import Home from '@/pages/Home/index.vue';
+import Login from "@/pages/Login/index.vue";
 
 Vue.use(VueRouter);
 
-const routes = [
-    { path: '/home', component: Home },
+export const constantRoutes = [
+    {
+        path: '/login',
+        name: 'Login',
+        component: Login,
+    }
 ];
 
+export const asyncRoutes = [];
+
 const router = new VueRouter({
-    mode: 'history', // Sử dụng history mode để URL không có dấu #
-    routes
+    mode: "history",
+    routes: constantRoutes
 });
+
+export function resetRouter() {
+	const newRouter = createRouter();
+
+	router.matcher = newRouter.matcher;
+}
 
 export default router;
