@@ -20,6 +20,7 @@ Vue.use(BootstrapVue);
 
 // Import CSS
 import '../css/app.css';
+import '../css/fontawesome.css';
 
 // Import SCSS
 import '@/scss/app.scss';
