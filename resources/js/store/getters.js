@@ -1,5 +1,5 @@
 const getters = {
-    getCampus: state => state.app.campus
+    isLoading: state => state.app.isLoading
 };
 
 export default getters;

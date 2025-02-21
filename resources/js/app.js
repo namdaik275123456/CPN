@@ -38,6 +38,9 @@ import '../css/fontawesome/css/all.min.css';
 // Import SCSS
 import '@/scss/app.scss';
 
+// Permission
+import '@/utils/permission';
+
 new Vue({
     router,
     store,

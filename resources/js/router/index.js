@@ -15,10 +15,12 @@ export const constantRoutes = [
 
 export const asyncRoutes = [];
 
-const router = new VueRouter({
+const createRouter = () => new VueRouter({
     mode: "history",
-    routes: constantRoutes
+    routes: constantRoutes,
 });
+
+const router = createRouter();
 
 export function resetRouter() {
 	const newRouter = createRouter();
