@@ -1,5 +1,8 @@
-import Vue from 'vue/dist/vue.esm.js';
+import Vue from 'vue';
 import App from '../js/App.vue';
+
+// ENV
+Vue.prototype.$env = import.meta.env;
 
 // Vue Router
 import router from './router';
@@ -15,6 +18,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 Vue.use(BootstrapVue);
+
+// Toast
+import ToastService from '@/utils/toast';
+
+Vue.use(ToastService);
 
 // Helpers
 import * as helpers from "@/utils/helpers";

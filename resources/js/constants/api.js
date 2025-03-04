@@ -1,3 +1,3 @@
 export const API_ENDPOINTS = {
-    LOGIN: '/api/auth/login'
+    OAUTH_GOOGLE: "/api/oauth/google/callback"
 };

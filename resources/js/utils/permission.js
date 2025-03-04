@@ -2,7 +2,7 @@ import router, { resetRouter } from "@/router";
 import CookieHelper from '@/utils/cookies';
 import CONSTANTS from '@/constants';
 
-const whiteList = ['/', '/login'];
+const whiteList = ["/", "/login", "/auth/google/callback", "/test"];
 
 function isLoggedIn() {
     try {
@@ -29,9 +29,10 @@ router.beforeEach((to, from, next) => {
         resetRouter();
 
         if (whiteList.indexOf(to.matched[0] ? to.matched[0].path : '') !== -1) {
+            console.log("whiteList");
             next();
         } else {
-            if (to.name !== "Login") {
+            if (to.name !== "Login" && to.name !== "OAuthCallback") {
                 next({ name: "Login" });
             } else {
                 next();

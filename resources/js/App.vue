@@ -2,10 +2,10 @@
     <b-overlay
         :show="isLoading"
         variant="white"
-        :opacity="1"
+        opacity="1"
         blur="1rem"
         rounded="sm"
-        :z-index="999999"
+        z-index="999999"
     >
         <template #overlay>
             <div class="text-center">
@@ -15,6 +15,7 @@
                 </p>
             </div>
         </template>
+
         <router-view />
     </b-overlay>
 </template>

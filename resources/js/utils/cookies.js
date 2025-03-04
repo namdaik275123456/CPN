@@ -1,4 +1,4 @@
-import Cookies from 'cookies-js';
+import Cookies from "js-cookie";
 
 const CookieHelper = {
     set(name, value, options = {}) {

@@ -10,21 +10,19 @@
         <b-card class="login-card text-center">
             <h3 class="mb-4">Đăng nhập</h3>
             <b-form>
-                <b-form-select v-model="selectedBranch" :options="branches" id="branch" required class="custom-select"></b-form-select>
+                <b-form-select v-model="selectedBranch" :options="branches" id="branch" class="custom-select"></b-form-select>
 
                 <b-button variant="danger" block class="custom-button google-btn mt-3" @click="loginWithGoogle">
                     <i class="fab fa-google"></i> Đăng nhập với Google
                 </b-button>
             </b-form>
         </b-card>
-
-        <button @click="show()">Hiênr thị</button>
-        <button @click="hide()">Dong</button>
     </div>
 </template>
 
 <script>
 export default {
+    name: "Login",
     data() {
         return {
             selectedBranch: null,
@@ -39,14 +37,19 @@ export default {
     },
     methods: {
         loginWithGoogle() {
-            console.log('Đăng nhập với Google');
-            // Xử lý OAuth Google
-        },
-        show() {
+            try {
+                const clientId = this.$env.VITE_GOOGLE_CLIENT_ID;
+                const redirectUri = this.$env.VITE_GOOGLE_REDIRECT_URI;
+                const scope = this.$env.VITE_GOOGLE_SCOPE;
+                const prompt = this.$env.VITE_GOOGLE_PROMPT;
+                const responseType = this.$env.VITE_GOOGLE_RESPONSE_TYPE;
 
-        },
-        hide() {
+                const googleAuthURL = `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&prompt=${prompt}&response_type=${responseType}`;
 
+                window.location.href = googleAuthURL;
+            } catch (error) {
+                console.log("[loginWithGoogle]:", error);
+            }
         }
     }
 };
