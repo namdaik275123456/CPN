@@ -2,14 +2,19 @@
 
 namespace App\Providers;
 
-use App\Repositories\ActivityRepositoryInterface;
 use App\Repositories\BaseRepositoryInterface;
-use App\Repositories\Contracts\ActivityRepository;
 use App\Repositories\Contracts\BaseRepository;
-use App\Services\ActivityServiceInterface;
+
+use App\Services\Contracts\UserService;
+use App\Services\RecipientServiceInterface;
+use App\Services\Contracts\RecipientService;
+
+use App\Services\FcmNoticeServiceInterface;
+use App\Services\Contracts\FcmNoticeService;
+
 use App\Services\BaseServiceInterface;
-use App\Services\Contracts\ActivityService;
 use App\Services\Contracts\BaseService;
+use App\Services\UserServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -24,8 +29,9 @@ class RepositoryServiceProvider extends ServiceProvider
     $this->app->bind(BaseRepositoryInterface::class, BaseRepository::class);
     $this->app->bind(BaseServiceInterface::class, BaseService::class);
 
-    $this->app->bind(ActivityServiceInterface::class, ActivityService::class);
-    $this->app->bind(ActivityRepositoryInterface::class, ActivityRepository::class);
+    $this->app->bind(FcmNoticeServiceInterface::class, FcmNoticeService::class);
+    $this->app->bind(RecipientServiceInterface::class, RecipientService::class);
+    $this->app->bind(UserServiceInterface::class, UserService::class);
   }
 
   /**

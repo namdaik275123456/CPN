@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class User extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    // use HasApiTokens, HasFactory, Notifiable;
+
+    // protected $primaryKey = 'user_code';
 
     /**
      * The attributes that are mass assignable.
@@ -18,9 +21,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'user_code',
+        'user_email',
+        'user_name',
+        'device_fcm_token',
+        'last_login_at',
+        'last_ip'
     ];
 
     /**
@@ -28,17 +34,17 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    // protected $hidden = [
+    //     'password',
+    //     'remember_token',
+    // ];
 
     /**
      * The attributes that should be cast.
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    // protected $casts = [
+    //     'email_verified_at' => 'datetime',
+    // ];
 }
