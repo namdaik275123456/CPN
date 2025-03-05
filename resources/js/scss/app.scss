@@ -1,5 +1,44 @@
-.a {
-    .b {
-        color: red;
-    }
+// Đảm bảo overlay phủ full màn hình
+.b-overlay {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.8); // Màu nền mờ
+    z-index: 999999; // Đảm bảo overlay hiển thị trên cùng
+}
+
+// Căn giữa nội dung loading
+.b-overlay .text-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+// Hiệu ứng icon loading
+.icon-loading {
+    font-size: 3rem;
+    color: #211d71;
+    animation: spin 1s linear infinite;
+}
+
+// Hiển thị text loading
+.text-loading {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+// Animation quay tròn của icon
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

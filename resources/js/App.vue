@@ -1,29 +1,32 @@
 <template>
-    <div>
-        <router-link to="/home">
-            Home
-        </router-link>
+    <b-overlay
+        :show="isLoading"
+        variant="white"
+        opacity="1"
+        blur="1rem"
+        rounded="sm"
+        z-index="999999"
+    >
+        <template #overlay>
+            <div class="text-center">
+                <i class="fad fa-spinner-third fa-spin icon-loading" />
+                <p class="text-loading">
+                    Đang tải...
+                </p>
+            </div>
+        </template>
 
         <router-view />
-
-        <div class="a">
-            <div class="b">
-                Ahgihi: {{ getCampus }}
-            </div>
-        </div>
-    </div>
+    </b-overlay>
 </template>
 
 <script>
 export default {
-    name: 'App',
+    name: "App",
     computed: {
-        getCampus() {
-            return this.$store.getters.getCampus;
+        isLoading() {
+            return this.$store.getters.isLoading;
         }
-    },
-    created() {
-        console.log(this.$helpers.isNumber('1'));
     }
-}
+};
 </script>

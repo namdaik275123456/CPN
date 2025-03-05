@@ -1,16 +1,16 @@
 export default {
     namespaced: true,
     state: {
-        campus: "HN"
+        isLoading: false
     },
     mutations: {
-        SET_CAMPUS(state, campus) {
-            state.campus = campus;
+        SET_LOADING(state, status) {
+            state.status = status;
         },
     },
     actions: {
-        setCampus({ commit }, campus) {
-            commit('SET_CAMPUS', campus);
+        setLoading({ commit }, status) {
+            commit('SET_LOADING', status);
         },
     }
 };

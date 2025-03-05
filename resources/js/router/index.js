@@ -1,17 +1,47 @@
-import Vue from 'vue/dist/vue.esm.js';
-import VueRouter from 'vue-router';
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-import Home from '@/pages/Home/index.vue';
+import Login from "@/pages/Login/index.vue";
+import GoogleCallBack from "@/pages/OAuthCallback/index.vue";
+
+import Test from "@/pages/Test/index.vue";
 
 Vue.use(VueRouter);
 
-const routes = [
-    { path: '/home', component: Home },
+export const constantRoutes = [
+    {
+        path: "/login",
+        name: "Login",
+        component: Login,
+    },
+    {
+        path: "/auth/google/callback",
+        name: "OAuthCallback",
+        component: GoogleCallBack,
+        meta: {
+            requiresAuth: false
+        }
+    },
+    {
+        path: "/test",
+        name: "Test",
+        component: Test
+    }
 ];
 
-const router = new VueRouter({
-    mode: 'history', // Sử dụng history mode để URL không có dấu #
-    routes
+export const asyncRoutes = [];
+
+const createRouter = () => new VueRouter({
+    mode: "history",
+    routes: constantRoutes,
 });
+
+const router = createRouter();
+
+export function resetRouter() {
+	const newRouter = createRouter();
+
+	router.matcher = newRouter.matcher;
+}
 
 export default router;
