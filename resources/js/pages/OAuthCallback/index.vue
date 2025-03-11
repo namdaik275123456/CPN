@@ -1,49 +1,76 @@
 <template>
-    <div>Loading...</div>
+    <div class="page-oauth-callback">
+
+    </div>
 </template>
 
 <script>
+import CookieHelper from "@/utils/cookies";
 import authService from "@/services/authService";
 
 export default {
     name: "OAuthCallback",
     beforeMount() {
+        if (CookieHelper.get("IS_AUTHENTICATED")) {
+            return;
+        }
+
         this.handleCallback();
     },
     methods: {
         async handleCallback() {
             try {
+                localStorage.removeItem(this.$constants.LOCAL_STORAGE.OAUTH_IN_PROGRESS);
+
+                this.$store.dispatch("app/setLoading", true);
+
                 const urlParams = new URLSearchParams(window.location.search);
                 const code = urlParams.get("code");
-                console.log("code:", code);
 
                 if (!code) {
-                    this.$router.push({ name: "Login" });
-
+                    this.doLogout();
                     return;
                 }
 
                 const auth = await authService.login({ code });
-                console.log(auth);
-
                 const { user } = auth;
+
                 if (!user) {
-
-                    await this.$store.dispatch("auth/setIsAuthenticated", false)
-                    this.$router.push("/login");
-
+                    this.doLogout();
                     return;
                 }
 
-                await this.$store.dispatch("auth/setIsAuthenticated", true);
-                this.$router.push("/test");
-            } catch (error) {
-                console.log("[handleCallback]:", error);
+                await this.$store.dispatch("auth/fetchUser");
 
-                await this.$store.dispatch("auth/setIsAuthenticated", false)
-                this.$router.push("/login");
+                this.$store.dispatch("app/setLoading", false);
+
+                console.log("✅ Xác thực thành công, chuyển hướng Dashboard...");
+
+                this.$router.replace({ name: "dashboard" });
+            } catch (error) {
+                console.error("[handleCallback]:", error);
+                this.doLogout();
             }
+        },
+        doLogout() {
+            this.$store.dispatch("app/setLoading", false);
+            this.$store.dispatch("auth/setUserState", {
+                isAuthenticated: false,
+                user: null
+            });
+
+            localStorage.removeItem(this.$constants.LOCAL_STORAGE.OAUTH_IN_PROGRESS);
+
+            this.$router.push({ name: "login" });
         }
-    },
-}
+    }
+};
+
 </script>
+
+<style lang="scss" scoped>
+.page-oauth-callback {
+    height: 100vh;
+    width: 100%;
+}
+</style>

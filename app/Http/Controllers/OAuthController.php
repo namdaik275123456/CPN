@@ -30,7 +30,7 @@ class OAuthController extends Controller
             $data = $response->json();
 
             if (!isset($data['access_token'])) {
-                return response()->json(['error' => 'invalid_token', 'google_response' => $data], 400);
+                return response()->json(['error' => ('invalid_token: ' . env('GOOGLE_CLIENT_ID')), 'google_response' => $data], 400);
             }
 
             $accessToken = $data['access_token'];
@@ -53,47 +53,13 @@ class OAuthController extends Controller
                     'name' => $user['name'] ?? null,
                     'email' => $user['email'],
                     'avatar' => $user['picture'] ?? null,
+                    'role' => 'admin',
+                    'permission' => 'admin'
                 ]
-            ]);
+            ])->cookie('oauth_token', $accessToken, 60 * 24, '/', null, true, true, false, 'None');
         } catch (\Exception $e) {
             Log::error("Google OAuth Error: " . $e->getMessage());
             return response()->json(['error' => 'server_error'], 500);
         }
-    }
-
-    // 🔹 5️⃣ API kiểm tra trạng thái đăng nhập
-    public function checkAuth(Request $request)
-    {
-        $token = $request->cookie('oauth_token');
-
-        if (!$token) {
-            return response()->json(['isAuthenticated' => false], 401);
-        }
-
-        $userResponse = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $token
-        ])->get('https://www.googleapis.com/oauth2/v3/userinfo');
-
-        $user = $userResponse->json();
-
-        if (!isset($user['email'])) {
-            return response()->json(['isAuthenticated' => false], 401);
-        }
-
-        return response()->json([
-            'isAuthenticated' => true,
-            'user' => [
-                'name' => $user['name'] ?? null,
-                'email' => $user['email'],
-                'avatar' => $user['picture'] ?? null,
-            ]
-        ]);
-    }
-
-    // 🔹 6️⃣ Logout (Xóa cookie an toàn hơn)
-    public function logout()
-    {
-        return response()->json(['message' => 'Logged out'])
-            ->withCookie(Cookie::forget('oauth_token')->withPath('/'));
     }
 }

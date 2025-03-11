@@ -25,7 +25,7 @@ export default {
     name: "Login",
     data() {
         return {
-            selectedBranch: null,
+            selectedBranch: localStorage.getItem(this.$constants.LOCAL_STORAGE.CAMPUS) || null,
             branches: [
                 { value: null, text: 'Chọn cơ sở' },
                 { value: 'hcm', text: 'Hồ Chí Minh' },
@@ -35,9 +35,27 @@ export default {
             ]
         };
     },
+    computed: {
+        isSelectedBranchChange() {
+            return this.selectedBranch;
+        }
+    },
+    watch: {
+        isSelectedBranchChange() {
+            localStorage.setItem(this.$constants.LOCAL_STORAGE.CAMPUS, this.selectedBranch);
+        }
+    },
     methods: {
         loginWithGoogle() {
             try {
+                localStorage.setItem(this.$constants.LOCAL_STORAGE.OAUTH_IN_PROGRESS, "true");
+
+                if (!this.selectedBranch) {
+                    this.$toast.warning("Vui lòng chọn cơ sở trước khi đăng nhập!");
+
+                    return;
+                }
+
                 const clientId = this.$env.VITE_GOOGLE_CLIENT_ID;
                 const redirectUri = this.$env.VITE_GOOGLE_REDIRECT_URI;
                 const scope = this.$env.VITE_GOOGLE_SCOPE;
@@ -49,6 +67,8 @@ export default {
                 window.location.href = googleAuthURL;
             } catch (error) {
                 console.log("[loginWithGoogle]:", error);
+
+                localStorage.removeItem(this.$constants.LOCAL_STORAGE.OAUTH_IN_PROGRESS);
             }
         }
     }

@@ -1,3 +1,4 @@
 export const COOKIE = {
-    TOKEN: "TOKEN"
+    TOKEN: "TOKEN",
+    IS_AUTHENTICATED: "IS_AUTHENTICATED"
 };

@@ -5,7 +5,7 @@ export default {
     },
     mutations: {
         SET_LOADING(state, status) {
-            state.status = status;
+            state.isLoading = status;
         },
     },
     actions: {

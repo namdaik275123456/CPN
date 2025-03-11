@@ -46,8 +46,8 @@ import '../css/fontawesome/css/all.min.css';
 // Import SCSS
 import '@/scss/app.scss';
 
-// Permission
-import '@/utils/permission';
+// Middleware
+import '@/utils/middleware';
 
 new Vue({
     router,

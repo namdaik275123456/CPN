@@ -1,38 +1,58 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import Login from "@/pages/Login/index.vue";
-import GoogleCallBack from "@/pages/OAuthCallback/index.vue";
-
-import Test from "@/pages/Test/index.vue";
+import LayoutDashboard from "@/layouts/Dashboard/index.vue";
 
 Vue.use(VueRouter);
 
 export const constantRoutes = [
     {
+        path: "",
+        redirect: {
+            name: "login"
+        },
+    },
+    {
         path: "/login",
-        name: "Login",
-        component: Login,
+        name: "login",
+        component: () => import("@/pages/Login/index.vue"),
     },
     {
         path: "/auth/google/callback",
-        name: "OAuthCallback",
-        component: GoogleCallBack,
-        meta: {
-            requiresAuth: false
-        }
+        name: "oAuthCallback",
+        component: () => import("@/pages/OAuthCallback/index.vue"),
     },
     {
-        path: "/test",
-        name: "Test",
-        component: Test
+        path: "*", // Bất kỳ route nào không khớp sẽ vào đây
+        name: "pageNotFound",
+        component: () => import("@/pages/PageNotFound/index.vue"),
+    },
+];
+
+export const asyncRoutes = [
+    {
+        path: "/dashboard",
+        name: "dashboard",
+        component: LayoutDashboard,
+        meta: {
+            role: ['admin']
+        },
+        redirect: {
+            name: "dashboardHome"
+        },
+        children: [
+            {
+                path: "home",
+                name: "dashboardHome",
+                component: () => import("@/pages/Dashboard/Home/index.vue")
+            }
+        ]
     }
 ];
 
-export const asyncRoutes = [];
-
 const createRouter = () => new VueRouter({
     mode: "history",
+    scrollBehavior: () => ({ y: 0 }),
     routes: constantRoutes,
 });
 

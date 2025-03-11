@@ -14,6 +14,7 @@ const api = axios.create({
 api.interceptors.response.use(
     (response) => response.data,
     (error) => {
+        console.log(error.response.data);
         if (error.response && error.response.status === 401) {
             console.warn("Unauthorized! Redirecting to login...");
             // Có thể thực hiện điều hướng về trang đăng nhập tại đây
