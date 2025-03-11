@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\Contracts;
 
-use App\Models\Message;
+use App\Models\Notice;
 use App\Services\FcmNoticeServiceInterface;
 use App\Services\RecipientServiceInterface;
 use Exception;
@@ -46,23 +46,31 @@ class FcmNoticeService extends BaseService implements FcmNoticeServiceInterface
 
     public function __construct(RecipientServiceInterface $recipientService)
     {
+        // dd(env("FIREBASE_CREDENTIALS", ""));
         $this->RecipientService = $recipientService;
         $this->file_path = env("FIREBASE_CREDENTIALS", "");
         $this->auth_token = $this->getAccesstokenFcmService();
-        dd($this->auth_token);
         if (empty($this->auth_token)) {
             throw new Exception("The FCM token cannot be generated.");
         }
     }
 
-    public function sendWithPool($recipients) {
+    public function sendWithPool($recipients, $campus_code) {
         $client = new Client();
 
         foreach ($recipients as $key => $mess) {
+            if ($mess["device_token"] == "" || $mess["device_token"] == null) {
+                // $mess["device_token"] = User::where(["user_code" => $mess["user_code"]])->first()->device_fcm_token;
+                if ($user = User::where(["user_code" => $mess["user_code"]])->first()) {
+                    $mess["device_token"] = $user->device_fcm_token;
+                    $mess["user_name"] = $user->user_name;
+                }
+            }
             $this->RecipientService->createMessage(
                 user_name: $mess["user_name"],
                 user_code: $mess["user_code"],
-                device_token: ($mess["device_token"] == "") ? User::where(["user_code" => $mess["user_code"]])->first()->device_fcm_token : $mess["device_token"],
+                campus_code: $campus_code,
+                device_token: $mess["device_token"],
                 title: $mess["message"]["title"],
                 body: $mess["message"]["body"],
                 image: $mess["message"]["image"]
@@ -80,15 +88,15 @@ class FcmNoticeService extends BaseService implements FcmNoticeServiceInterface
         };
 
         $pool = new Pool($client, $requests($listMessage), [
-            'concurrency' => 5,  // Số lượng request đồng thời tối đa
+            'concurrency' => 20,  // Số lượng request đồng thời tối đa
             'fulfilled' => function ($response, $index) use ($listMessage) {
                 error_log( "Request {$index} đã thực hiện thành công.\n");
-                $listMessage[$index]->sent_flag = 1;
+                $listMessage[$index]->send_status = Notice::SENT_SUCCESS;
                 $listMessage[$index]->save();
             },
             'rejected' => function (RequestException $reason, $index) use ($listMessage) {
                 error_log( "Request {$index} bị từ chối: {$reason->getMessage()}\n");
-                $listMessage[$index]->sent_flag = 1;
+                $listMessage[$index]->send_status = Notice::SENT_FAIL;
                 $listMessage[$index]->save();
             },
         ]);
@@ -98,6 +106,19 @@ class FcmNoticeService extends BaseService implements FcmNoticeServiceInterface
         $promise->wait();
 
         return  $this->RecipientService->getRecipients();
+    }
+
+    public function seenNotice($notice_id, $user_code) {
+
+    }
+
+    public function GetListNotices($user_code, $campus_code) {
+        $notices = Notice::query()
+            ->where("user_code", $user_code)
+            ->where("campus_code", $campus_code)
+            ->where("send_status", Notice::SENT_SUCCESS)
+            ->paginate(10,['id' , 'user_code', 'campus_code', 'user_code', 'title', 'body', 'image', 'device_token']);
+        return $notices;
     }
 
     function getAccesstokenFcmService() {

@@ -13,18 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('messages');
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::dropIfExists('notices');
+        Schema::create('notices', function (Blueprint $table) {
 
             // $user_name, $user_code, $device_token, $title, $body, $image
             $table->id();
             $table->string(column: 'user_name');
             $table->string(column: 'user_code');
+            $table->string(column: 'campus_code');
             $table->string(column: 'title');
             $table->text(column: 'body');
             $table->string(column: 'image');
             $table->string(column: 'device_token');
-            $table->boolean(column: 'sent_flag')->default(value: false);
+            $table->string(column: 'send_status')->default(value: "pending")->comment("success, fail, pending");
+            $table->boolean(column: 'seen_status')->nullable()->default(value: null)->comment("new, seen, lost");
             $table->timestamps();
         });
     }

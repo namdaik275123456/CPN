@@ -22,6 +22,15 @@ Route::post('/SendNotice', [NoticeController::class, 'SendNotice']);
 Route::post('/SendMultiplesNotices', [NoticeController::class, 'SendMultiplesNotices']);
 Route::post('/saveDeviceToken', [UserController::class, 'SaveDeviceToken']);
 
+
+Route::group(['prefix' => 'notice'], function () {
+    Route::group(['prefix' => 'mobile'], function () {
+        Route::post('/seen', [NoticeController::class, 'SeenNotice']);
+    });
+
+    Route::get('/get-list-by-student', [NoticeController::class, 'GetListNoticeSent']);
+});
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

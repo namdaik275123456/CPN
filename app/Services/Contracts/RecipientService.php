@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\Contracts;
 
-use App\Models\Message;
+use App\Models\Notice;
 use App\Services\RecipientServiceInterface;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -12,7 +12,7 @@ class RecipientService extends BaseService implements RecipientServiceInterface
 {
     /**
      * The list of devices that will receive the message.
-     * @var Message[] An array of Message objects
+     * @var Notice[] An array of Message objects
      */
     private $recipients = [
 
@@ -34,25 +34,28 @@ class RecipientService extends BaseService implements RecipientServiceInterface
      * @param string $title The message title.
      * @param string $body The message body.
      * @param string $image The message image URL.
-     * @return Message The Message object.
+     * @return Notice The Message object.
      */
-    public function createMessage($user_name, $user_code, $device_token, $title, $body, $image): Message {
-        $this->recipients[] = Message::create(attributes: [
+    public function createMessage($user_name, $user_code, $campus_code, $device_token, $title, $body, $image): Notice {
+        $this->recipients[] = Notice::create(attributes: [
             "user_name" => $user_name,
             "user_code" => $user_code,
+            "campus_code" => $campus_code,
             "device_token" => $device_token,
             "title" => $title,
             "body" => $body,
-            "image" => $image
+            "image" => $image,
+            "send_status" => Notice::PENDING,
+            "seen_status" => null
         ]);
         return $this->recipients[count(value: $this->recipients) - 1];
     }
 
     /**
      * Xóa một phần tử khỏi mảng $recipients
-     * @param Message $message The message object to remove
+     * @param Notice $message The message object to remove
      */
-    public function removeRecipient(Message $message)
+    public function removeRecipient(Notice $message)
     {
         foreach ($this->recipients as $key => $recipient) {
             if ($recipient == $message) {
@@ -65,10 +68,28 @@ class RecipientService extends BaseService implements RecipientServiceInterface
 
     /**
      * The function to return a list of recipients.
-     * @return Message[] An array of Message objects representing the recipients.
+     * @return Notice[] An array of Message objects representing the recipients.
      */
     public function getRecipients(): array {
         return $this->recipients;
+    }
+
+    /**
+     * The function to return a list of recipients.
+     * @return Notice[] An array of Message objects representing the recipients.
+     */
+    public function seenNotice(): array {
+
+        return [];
+    }
+
+    /**
+     * The function to return a list of Notices .
+     * @return Notice[] An array of Message objects representing the recipients.
+     */
+    public function getNotices($user_code, $campus_code): array {
+        //Notice::query()->where("send_status", true)->order
+        return [];
     }
 }
 ?>

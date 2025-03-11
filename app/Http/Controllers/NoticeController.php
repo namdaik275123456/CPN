@@ -17,7 +17,7 @@ class NoticeController extends Controller
     }
     public function SendMultiplesNotices(Request $request)
     {
-        return $this->FcmService->sendWithPool($request->recipients);
+        return $this->FcmService->sendWithPool($request->recipients, $request->campus_code);
     }
     public function SendNotice()
     {
@@ -60,6 +60,16 @@ class NoticeController extends Controller
         }
 
         return json_decode($response->getBody(), true);
+    }
+
+    public function SeenNotice(Request $request) {
+        return $this->FcmService->seenNotice($request->notice_id, $request->user_code);
+    }
+
+    public function GetListNoticeSent(Request $request) {
+        $user_code = $request->query('user_code');
+        $campus_code = $request->query('campus_code');
+        return $this->FcmService->GetListNotices($user_code, $campus_code);
     }
 
     private function getAccesstokenFcmService() {
