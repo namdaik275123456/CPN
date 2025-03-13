@@ -18,6 +18,8 @@ export default {
             state.isAuthenticated = isAuthenticated;
             state.user = user;
 
+            console.log("[VueX] User:", user);
+
             if (isAuthenticated) {
                 setAuthStatus(true); // Lưu vào Cookie
             } else {
@@ -36,25 +38,30 @@ export default {
         /**
          * Gọi API lấy thông tin user
          */
-        async fetchUser({ commit, dispatch }) {
+        async fetchUser({ commit, dispatch }, user = null) {
             try {
                 console.log("📡 [Auth] Gọi API fetchUser...");
 
-                // Fake API - Giả lập dữ liệu user
-                const fakeUser = {
-                    name: "John Doe",
-                    email: "johndoe@example.com",
-                    role: ["admin"],
-                    permissions: ["admin"]
-                };
+                if (user) {
+                    console.log("✅ [Auth] Sử dụng thông tin user đã truyền vào.");
+                } else {
+                    // Fake API - Giả lập dữ liệu user
+                    user = {
+                        name: "Đức Việt Vũ",
+                        email: "vuducviet0131@gmail.com",
+                        avatar: "https://lh3.googleusercontent.com/a/ACg8ocI-0lkf2NAOGdTgi8OvEfsIsNjsfFdkveWUE61H5lW8L9lZsymalg=s96-c",
+                        role: ["admin"],
+                        permissions: ["admin"]
+                    };
+                }
 
                 // ✅ Lưu thông tin user vào state
-                dispatch("setUserState", { isAuthenticated: true, user: fakeUser });
+                dispatch("setUserState", { isAuthenticated: true, user: user });
 
                 // ✅ Gọi action `generateRoutes` từ module permission
                 const accessedRoutes = await dispatch(
                     "permission/generateRoutes",
-                    { roles: [fakeUser.role], permissions: fakeUser.permissions },
+                    { roles: [user.role], permissions: user.permissions },
                     { root: true }
                 );
 

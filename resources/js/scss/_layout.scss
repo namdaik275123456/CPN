@@ -1,0 +1,185 @@
+// Định nghĩa các biến màu
+$dark-slate: #293541; // Xanh đen
+$primary-orange: #FFA500; // Màu cam chủ đạo
+$secondary-orange: #FF4500; // Màu cam đậm (dùng cho các điểm nhấn)
+$light-orange: #FFB84D; // Màu cam sáng
+$white: #FFFFFF; // Màu trắng
+
+.navbar {
+    width: 100%;
+    top: 0;
+    position: sticky;
+    z-index: 999;
+    background-color: $white !important;
+
+    .navbar-brand {
+        i {
+            color: $dark-slate;
+        }
+    }
+
+    .navbar-toggler {
+        background-color: $primary-orange;
+        i {
+            color: $white;
+        }
+    }
+
+    .app-name {
+        line-height: 1rem;
+        color: $white;
+    }
+
+    #nav-collapse {
+        button {
+            border: none !important;
+
+            &:hover {
+                opacity: 1;
+            }
+
+            &:focus {
+                box-shadow: none;
+            }
+        }
+    }
+}
+
+#toggle-menu {
+    cursor: pointer;
+}
+
+#wrapper {
+    padding-left: 0;
+    transition: all 0.5s ease;
+    position: relative;
+
+    #sidebar-wrapper {
+        z-index: 1000;
+        position: fixed;
+        left: 250px;
+        width: 0;
+        height: 100%;
+        margin-left: -250px;
+        overflow-y: auto;
+        background: $white;
+        transition: all 0.5s ease;
+    }
+
+    #page-content-wrapper {
+        width: 100%;
+        position: absolute;
+
+        .app-main {
+            height: calc(100vh - 68px);
+            width: 100%;
+        }
+    }
+}
+
+.zone-app-name {
+    padding-top: 30px;
+    padding-bottom: 25px;
+    text-align: center;
+    color: $primary-orange;
+}
+
+.display-menu {
+    overflow: hidden;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 250px;
+
+    a {
+        color: $white;
+        line-height: 20px;
+
+        li {
+            padding: 15px 0;
+            width: 100%;
+            display: flex;
+            overflow: hidden;
+
+            i {
+                margin: 0 10px;
+            }
+
+            span {
+                word-wrap: break-word;
+            }
+        }
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        &.router-link-active {
+            li {
+                background-color: $secondary-orange;
+            }
+        }
+    }
+}
+
+#wrapper.toggled {
+	padding-left: 250px;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+	width: 250px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+	position: absolute;
+	margin-right: -250px;
+}
+
+
+
+// Media Queries
+@media (min-width: 768px) {
+    #wrapper {
+        padding-left: 250px;
+
+        #sidebar-wrapper {
+            width: 250px;
+        }
+
+        #page-content-wrapper {
+            position: relative;
+        }
+    }
+
+	#wrapper.toggled {
+		padding-left: 0;
+	}
+
+	#wrapper.toggled #sidebar-wrapper {
+		width: 0;
+	}
+
+	#wrapper.toggled #page-content-wrapper {
+		position: relative;
+		margin-right: 0;
+	}
+}
+
+@media (min-width: 991px) {
+    .display-item:not(:last-child) {
+        margin-right: 10px;
+    }
+}
+
+@media (max-width: 991px) {
+    span.app-name {
+        text-align: center;
+        padding: 15px 0;
+    }
+
+    .display-item {
+        margin-bottom: 10px;
+    }
+}

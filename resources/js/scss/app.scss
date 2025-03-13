@@ -1,3 +1,5 @@
+@use "@/scss/_variables.scss";
+
 // Đảm bảo overlay phủ full màn hình
 .b-overlay {
     position: fixed !important;
@@ -9,7 +11,7 @@
     align-items: center;
     justify-content: center;
     background: rgba(255, 255, 255, 0.8); // Màu nền mờ
-    z-index: 999999; // Đảm bảo overlay hiển thị trên cùng
+    z-index: 1050; // Bootstrap modal có z-index cao, nên cần >=1050
 }
 
 // Căn giữa nội dung loading
@@ -22,10 +24,10 @@
     height: 100%;
 }
 
-// Hiệu ứng icon loading
+// Hiệu ứng icon loading (dùng FontAwesome hoặc custom)
 .icon-loading {
     font-size: 3rem;
-    color: #211d71;
+    color: #FFA500;
     animation: spin 1s linear infinite;
 }
 
@@ -41,4 +43,199 @@
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+// Ghi đè lại bootstrap vue
+.card {
+    border-radius: 8px !important;
+    border: 1px solid #e0e0e0 !important;
+    background: #ffffff !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07) !important; // Bóng nhẹ
+    transition: all 0.3s ease-in-out !important;
+    overflow: hidden !important;
+
+    .card-header {
+        background: #f8f9fa !important;
+        color: #333 !important;
+        font-weight: bold !important;
+        padding: 16px !important;
+        border-bottom: 1px solid #e0e0e0 !important;
+    }
+
+    .card-body {
+        padding: 20px !important;
+        color: #333 !important;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .card-footer {
+        background: #f8f9fa !important;
+        color: #555 !important;
+        font-weight: bold !important;
+        text-align: right !important;
+        padding: 12px !important;
+        border-top: 1px solid #e0e0e0 !important;
+    }
+}
+
+/* Mixin để tạo gradient cho button */
+@mixin gradient-button($color1, $color2) {
+    background: linear-gradient(90deg, $color1, $color2); /* Gradient từ trái qua phải */
+    color: white !important;
+    border-color: transparent;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none; /* Xóa outline để tránh nhấp nháy khi focus */
+
+    /* Khi hover */
+    &:hover {
+        background: linear-gradient(90deg, lighten($color1, 5%), lighten($color2, 5%)) !important; /* Gradient nhẹ hơn khi hover */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Box-shadow đậm hơn khi hover */
+        transform: translateY(-3px); /* Đẩy nhẹ lên khi hover */
+        border-color: transparent;
+    }
+
+    /* Khi bấm giữ */
+    &:active {
+        background: linear-gradient(90deg, darken($color1, 10%), darken($color2, 10%)) !important;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); /* Box-shadow đậm hơn khi active */
+        transform: scale(0.98); /* Thêm hiệu ứng scale khi nhấn */
+        border-color: transparent;
+    }
+
+    /* Khi disabled */
+    &:disabled {
+        background: $color1 !important;
+        cursor: not-allowed;
+        box-shadow: none;
+        border-color: transparent;
+    }
+}
+
+/* Áp dụng cho từng loại button của Bootstrap Vue */
+.btn {
+    @include gradient-button(#FF7F00, #FF4500); /* Default (màu cam) */
+}
+
+.btn-primary {
+    @include gradient-button(#FFA500, #FF7F00); /* Primary màu cam */
+}
+
+.btn-secondary {
+    @include gradient-button(#6C757D, #495057); /* Xám */
+}
+
+.btn-success {
+    @include gradient-button(#28A745, #1E7E34); /* Xanh lá */
+}
+
+.btn-danger {
+    @include gradient-button(#DC3545, #A71D2A); /* Đỏ */
+}
+
+.btn-warning {
+    @include gradient-button(#FFC107, #E0A800); /* Vàng */
+}
+
+.btn-info {
+    @include gradient-button(#17A2B8, #117A8B); /* Xanh nước biển */
+}
+
+.btn-light {
+    @include gradient-button(#F8F9FA, #E2E6EA); /* Xám nhạt */
+    color: #333 !important; /* Chữ tối màu */
+}
+
+.btn-dark {
+    @include gradient-button(#343A40, #1D2124); /* Xám đậm */
+}
+
+/* Bảng */
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px; /* Bo góc cho bảng */
+}
+
+/* Header */
+.custom-table thead th {
+    border-color: transparent !important;
+}
+
+.custom-table thead th {
+    background-color: #FF7F00;  /* Màu cam nhẹ */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.custom-table thead th:first-child {
+    border-top-left-radius: 8px;  /* Bo góc trên bên trái */
+}
+
+.custom-table thead th:last-child {
+    border-top-right-radius: 8px; /* Bo góc trên bên phải */
+}
+
+.custom-table thead tr {
+    border-color: transparent !important;
+}
+
+/* Ô dữ liệu */
+.custom-table tbody td {
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Dòng cuối cùng */
+.custom-table tbody tr:last-child td {
+    border-bottom-color: transparent;
+}
+
+.custom-table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 8px; /* Bo góc dưới bên trái */
+}
+
+.custom-table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 8px; /* Bo góc dưới bên phải */
+}
+
+/* Hover effect cho các hàng */
+.custom-table tbody tr:hover {
+    background-color: #ffe4b2;  /* Màu nền khi hover */
+    cursor: pointer;
+}
+
+/* Dòng được chọn */
+.custom-table tbody tr.selected {
+    background-color: #ffb84d;  /* Màu nền khi chọn dòng */
+}
+
+/* Cải thiện chiều cao của các ô */
+.custom-table tbody td,
+.custom-table thead th {
+    height: 50px;
+    vertical-align: middle;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .custom-table thead th,
+    .custom-table tbody td {
+        padding: 10px;
+        font-size: 12px;
+    }
 }

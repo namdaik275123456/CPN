@@ -3,7 +3,9 @@ const getters = {
 
     isAuthenticated: state => state.auth.isAuthenticated,
 
-    user: state => state.auth.user
+    user: state => state.auth.user,
+
+    routes: state => state.permission.routes
 };
 
 export default getters;

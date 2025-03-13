@@ -35,19 +35,66 @@ export const asyncRoutes = [
         name: "dashboard",
         component: LayoutDashboard,
         meta: {
-            role: ['admin']
+          title: "Dashboard",
+          icon: "fad fa-chart-pie",
+          role: ["admin"]
         },
         redirect: {
-            name: "dashboardHome"
+          name: "eventManagement",
         },
         children: [
-            {
-                path: "home",
-                name: "dashboardHome",
-                component: () => import("@/pages/Dashboard/Home/index.vue")
-            }
-        ]
-    }
+          {
+            path: "events",
+            name: "eventManagement",
+            component: () => import("@/pages/Dashboard/Events/index.vue"),
+            meta: {
+                title: "Sự kiện",
+                icon: "fad fa-calendar-alt",
+                role: ["admin"]
+            },
+          },
+          {
+            path: "students",
+            name: "studentManagement",
+            component: () => import("@/pages/Dashboard/Students/index.vue"),
+            meta: {
+                title: "Sinh viên",
+                icon: "fad fa-user-graduate",
+                role: ["admin"]
+            },
+          },
+          {
+            path: "campuses",
+            name: "campusManagement",
+            component: () => import("@/pages/Dashboard/Campuses/index.vue"),
+            meta: {
+                title: "Cơ sở",
+                icon: "fad fa-university",
+                role: ["admin"]
+            },
+          },
+          {
+            path: "departments",
+            name: "departmentManagement",
+            component: () => import("@/pages/Dashboard/Departments/index.vue"),
+            meta: {
+                title: "Phòng ban / bộ môn",
+                icon: "fad fa-building",
+                role: ["admin"]
+            },
+          },
+          {
+            path: "accounts",
+            name: "accountManagement",
+            component: () => import("@/pages/Dashboard/Accounts/index.vue"),
+            meta: {
+                title: "Tài khoản",
+                icon: "fad fa-user-cog",
+                role: ["admin"]
+            },
+          },
+        ],
+    },
 ];
 
 const createRouter = () => new VueRouter({

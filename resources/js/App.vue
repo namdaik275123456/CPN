@@ -33,8 +33,6 @@ export default {
     },
     async created() {
         try {
-            console.log("APP");
-
             console.log(this.isLoggedIn() ? "Đã login" : "Chưa login");
             console.log(this.isOAuthInProgress() ? "Đang xử lý login google" : "Không xử lý login google");
 
@@ -44,9 +42,12 @@ export default {
 
             if (this.isLoggedIn()) {
                 console.log("Lấy thông tin user và phân quyền");
-                await store.dispatch("auth/fetchUser");
 
-                router.push({ name: "dashboardHome" });
+                store.dispatch("app/setLoading", true);
+                await store.dispatch("auth/fetchUser");
+                store.dispatch("app/setLoading", false);
+
+                router.push(window.location.pathname);
             } else {
                 console.log("Chưa đăng nhập - Xoá thông tin user và phân quyền");
                 await this.doLogout();

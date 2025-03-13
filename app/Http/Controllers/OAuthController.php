@@ -53,8 +53,8 @@ class OAuthController extends Controller
                     'name' => $user['name'] ?? null,
                     'email' => $user['email'],
                     'avatar' => $user['picture'] ?? null,
-                    'role' => 'admin',
-                    'permission' => 'admin'
+                    'role' => ['admin'],
+                    'permission' => ['admin']
                 ]
             ])->cookie('oauth_token', $accessToken, 60 * 24, '/', null, true, true, false, 'None');
         } catch (\Exception $e) {

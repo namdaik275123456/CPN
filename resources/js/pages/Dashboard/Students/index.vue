@@ -1,15 +1,12 @@
 <template>
-    <div>
-        <h1>Home</h1>
-    </div>
+  <h1>Student</h1>
 </template>
 
 <script>
 export default {
-    name: "dashboardHome"
-}
+    name: "StudentManagement",
+};
 </script>
 
 <style lang="scss" scoped>
-
 </style>
