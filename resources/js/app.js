@@ -1,26 +1,26 @@
-import Vue from 'vue';
-import App from '../js/App.vue';
+import Vue from "vue";
+import App from "../js/App.vue";
 
 // ENV
 Vue.prototype.$env = import.meta.env;
 
 // Vue Router
-import router from './router';
+import router from "./router";
 
 // VueX
-import store from './store';
+import store from "./store";
 Vue.prototype.$store = store;
 
 // Bootstrap Vue
-import BootstrapVue from 'bootstrap-vue';
+import BootstrapVue from "bootstrap-vue";
 
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
 
 Vue.use(BootstrapVue);
 
 // Toast
-import ToastService from '@/utils/toast';
+import ToastService from "@/utils/toast";
 
 Vue.use(ToastService);
 
@@ -35,22 +35,22 @@ import EventBus from "@/utils/eventBus";
 Vue.use(EventBus);
 
 // Constants
-import ConstantsPlugin from '@/constants/constantsPlugin';
+import ConstantsPlugin from "@/constants/constantsPlugin";
 
 Vue.use(ConstantsPlugin);
 
 // Import CSS
-import '../css/app.css';
-import '../css/fontawesome/css/all.min.css';
+import "../css/app.css";
+import "../css/fontawesome/css/all.min.css";
 
 // Import SCSS
-import '@/scss/app.scss';
+import "@/scss/app.scss";
 
 // Middleware
-import '@/utils/middleware';
+import "@/utils/middleware";
 
 new Vue({
     router,
     store,
-    render: h => h(App),
-}).$mount('#app');
+    render: (h) => h(App),
+}).$mount("#app");

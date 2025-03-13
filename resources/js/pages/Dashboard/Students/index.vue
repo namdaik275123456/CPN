@@ -1,12 +1,11 @@
 <template>
-  <h1>Student</h1>
+    <h1>Student</h1>
 </template>
 
 <script>
-export default {
-    name: "StudentManagement",
-};
+    export default {
+        name: "StudentManagement",
+    };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

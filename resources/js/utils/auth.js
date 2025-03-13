@@ -17,7 +17,9 @@ export function setAuthStatus(value) {
     console.log(`[Auth] 🔹 setAuthStatus: ${value}`); // Debug
 
     if (value) {
-        Cookies.set(CONSTANTS.COOKIE.IS_AUTHENTICATED, "true", { expires: 1 }); // Lưu 1 ngày
+        Cookies.set(CONSTANTS.COOKIE.IS_AUTHENTICATED, "true", {
+            expires: 1,
+        }); // Lưu 1 ngày
     } else {
         removeAuthStatus();
     }

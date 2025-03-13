@@ -6,7 +6,9 @@ import api from "./api";
  * @param {Object} params - Tham số query gửi kèm
  */
 export function getRequest(url, params = {}) {
-    return api.get(url, { params });
+    return api.get(url, {
+        params,
+    });
 }
 
 /**

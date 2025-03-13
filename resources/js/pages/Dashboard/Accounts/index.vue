@@ -1,13 +1,11 @@
 <template>
     <h1>Accounts</h1>
-  </template>
+</template>
 
-  <script>
-  export default {
-      name: "AccountManagement"
-  }
-  </script>
+<script>
+    export default {
+        name: "AccountManagement",
+    };
+</script>
 
-  <style lang="scss" scoped>
-
-  </style>
+<style lang="scss" scoped></style>

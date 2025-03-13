@@ -5,7 +5,7 @@ const CookieHelper = {
         Cookies.set(name, value, {
             secure: true, // Chỉ gửi cookie qua HTTPS
             domain: window.location.hostname, // Lấy domain hiện tại
-            ...options
+            ...options,
         });
     },
 
@@ -15,7 +15,7 @@ const CookieHelper = {
 
     remove(name) {
         Cookies.expire(name);
-    }
+    },
 };
 
 export default CookieHelper;

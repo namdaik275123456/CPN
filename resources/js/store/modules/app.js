@@ -1,7 +1,7 @@
 export default {
     namespaced: true,
     state: {
-        isLoading: false
+        isLoading: false,
     },
     mutations: {
         SET_LOADING(state, status) {
@@ -9,8 +9,8 @@ export default {
         },
     },
     actions: {
-        setLoading({ commit }, status) {
-            commit('SET_LOADING', status);
+        setLoading({commit}, status) {
+            commit("SET_LOADING", status);
         },
-    }
+    },
 };

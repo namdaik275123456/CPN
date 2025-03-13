@@ -3,6 +3,7 @@ FIREBASE_CREDENTIALS=D:\A_FPI_MOBILE_APP\C_Panel\Laravel\BE_Cpanel\account_servi
 php -v : PHP 8.0.28 (cli)
 node -v : 20
 CMD:
+
 1. composer install
 2. npm install
 3. php artisan migrate:refresh

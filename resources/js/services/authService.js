@@ -1,12 +1,12 @@
-import { postRequest } from "./request";
+import {postRequest} from "./request";
 import CONSTANTS from "@/constants";
 
 const authService = {
-    login({ code }) {
+    login({code}) {
         return postRequest(CONSTANTS.API_ENDPOINTS.OAUTH_GOOGLE, {
-            code
+            code,
         });
-    }
+    },
 };
 
 export default authService;

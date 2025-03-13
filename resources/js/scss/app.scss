@@ -27,7 +27,7 @@
 // Hiệu ứng icon loading (dùng FontAwesome hoặc custom)
 .icon-loading {
     font-size: 3rem;
-    color: #FFA500;
+    color: #ffa500;
     animation: spin 1s linear infinite;
 }
 
@@ -41,8 +41,12 @@
 
 // Animation quay tròn của icon
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 // Ghi đè lại bootstrap vue
@@ -87,7 +91,10 @@
     font-size: 16px;
     font-weight: 600;
     border-radius: 8px;
-    transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transition:
+        background 0.3s ease-in-out,
+        box-shadow 0.3s ease-in-out,
+        transform 0.3s ease-in-out;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -121,40 +128,40 @@
 
 /* Áp dụng cho từng loại button của Bootstrap Vue */
 .btn {
-    @include gradient-button(#FF7F00, #FF4500); /* Default (màu cam) */
+    @include gradient-button(#ff7f00, #ff4500); /* Default (màu cam) */
 }
 
 .btn-primary {
-    @include gradient-button(#FFA500, #FF7F00); /* Primary màu cam */
+    @include gradient-button(#ffa500, #ff7f00); /* Primary màu cam */
 }
 
 .btn-secondary {
-    @include gradient-button(#6C757D, #495057); /* Xám */
+    @include gradient-button(#6c757d, #495057); /* Xám */
 }
 
 .btn-success {
-    @include gradient-button(#28A745, #1E7E34); /* Xanh lá */
+    @include gradient-button(#28a745, #1e7e34); /* Xanh lá */
 }
 
 .btn-danger {
-    @include gradient-button(#DC3545, #A71D2A); /* Đỏ */
+    @include gradient-button(#dc3545, #a71d2a); /* Đỏ */
 }
 
 .btn-warning {
-    @include gradient-button(#FFC107, #E0A800); /* Vàng */
+    @include gradient-button(#ffc107, #e0a800); /* Vàng */
 }
 
 .btn-info {
-    @include gradient-button(#17A2B8, #117A8B); /* Xanh nước biển */
+    @include gradient-button(#17a2b8, #117a8b); /* Xanh nước biển */
 }
 
 .btn-light {
-    @include gradient-button(#F8F9FA, #E2E6EA); /* Xám nhạt */
+    @include gradient-button(#f8f9fa, #e2e6ea); /* Xám nhạt */
     color: #333 !important; /* Chữ tối màu */
 }
 
 .btn-dark {
-    @include gradient-button(#343A40, #1D2124); /* Xám đậm */
+    @include gradient-button(#343a40, #1d2124); /* Xám đậm */
 }
 
 /* Bảng */
@@ -171,7 +178,7 @@
 }
 
 .custom-table thead th {
-    background-color: #FF7F00;  /* Màu cam nhẹ */
+    background-color: #ff7f00; /* Màu cam nhẹ */
     color: white;
     font-size: 16px;
     font-weight: bold;
@@ -180,7 +187,7 @@
 }
 
 .custom-table thead th:first-child {
-    border-top-left-radius: 8px;  /* Bo góc trên bên trái */
+    border-top-left-radius: 8px; /* Bo góc trên bên trái */
 }
 
 .custom-table thead th:last-child {
@@ -215,13 +222,13 @@
 
 /* Hover effect cho các hàng */
 .custom-table tbody tr:hover {
-    background-color: #ffe4b2;  /* Màu nền khi hover */
+    background-color: #ffe4b2; /* Màu nền khi hover */
     cursor: pointer;
 }
 
 /* Dòng được chọn */
 .custom-table tbody tr.selected {
-    background-color: #ffb84d;  /* Màu nền khi chọn dòng */
+    background-color: #ffb84d; /* Màu nền khi chọn dòng */
 }
 
 /* Cải thiện chiều cao của các ô */

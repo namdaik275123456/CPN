@@ -6,16 +6,16 @@
 </template>
 
 <script>
-export default {
-    name: "PageNotFound",
-    methods: {
-        goHome() {
-            this.$router.push({ name: "dashboardHome" });
-        }
-    },
-}
+    export default {
+        name: "PageNotFound",
+        methods: {
+            goHome() {
+                this.$router.push({
+                    name: "dashboardHome",
+                });
+            },
+        },
+    };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
