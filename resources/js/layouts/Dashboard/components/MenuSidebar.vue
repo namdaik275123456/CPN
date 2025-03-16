@@ -178,29 +178,4 @@
         font-size: 14px;
         color: #888;
     }
-
-    /* Responsive Sidebar */
-    @media (max-width: 768px) {
-        .sidebar {
-            width: 70px;
-            align-items: center;
-        }
-
-        .app-name {
-            display: none;
-        }
-
-        .menu-item {
-            justify-content: center;
-            padding: 12px;
-        }
-
-        .menu-item .menu-text {
-            display: none;
-        }
-
-        .sidebar-footer {
-            font-size: 12px;
-        }
-    }
 </style>

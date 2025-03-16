@@ -18,8 +18,8 @@ export function setAuthStatus(value) {
 
     if (value) {
         Cookies.set(CONSTANTS.COOKIE.IS_AUTHENTICATED, "true", {
-            expires: 1,
-        }); // Lưu 1 ngày
+            expires: (1 / 1440 ),
+        }); // Lưu 10 phút
     } else {
         removeAuthStatus();
     }

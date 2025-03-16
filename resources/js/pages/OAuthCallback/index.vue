@@ -8,14 +8,14 @@
     import authService from "@/services/authService"; // Import dịch vụ xác thực
 
     export default {
-        name: "OAuthCallback", // Đặt tên cho component
-        beforeMount() {
-            // Kiểm tra nếu người dùng đã được xác thực từ cookie, không cần xử lý lại callback
+        name: "OAuthCallback", // Đặt tên cho component,
+        created() {
             if (CookieHelper.get("IS_AUTHENTICATED")) {
+                console.log("[Đã login -> Dashboard]");
+
                 return;
             }
 
-            // Nếu không, gọi hàm xử lý callback OAuth
             this.handleCallback();
         },
         methods: {

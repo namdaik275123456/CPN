@@ -9,41 +9,54 @@ function isOAuthInProgress() {
     return localStorage.getItem(constants.LOCAL_STORAGE.OAUTH_IN_PROGRESS) === "true";
 }
 
+const whiteList = ["/login"];
+
 // Cấu hình trước mỗi route được điều hướng
-router.beforeEach((to, from, next) => {
-    // Kiểm tra trạng thái đăng nhập của người dùng từ Vuex store
+router.beforeEach(async(to, from, next) => {
     const isLoggedIn = store.getters.isAuthenticated;
-    // Kiểm tra xem có tiến trình OAuth đang xử lý không
     const isOAuth = isOAuthInProgress();
 
-    // In ra trạng thái hiện tại của đăng nhập và OAuth
-    console.log(`[Router] 🔍 Trạng thái đăng nhập: ${isLoggedIn}`);
-    console.log(`[Router] ⏳ OAuth đang xử lý: ${isOAuth}`);
+    console.log(isLoggedIn ? "[Đã login]" : "[Chưa login]");
+    console.log(isOAuth ? "[Đang login GG]" : "[Không login GG]");
 
-    // 1. Nếu chưa đăng nhập và không có tiến trình OAuth, chuyển hướng đến trang login
-    if (!isLoggedIn && !isOAuth && to.name !== "login") {
-        console.log("[Router] ⛔ Chưa đăng nhập, chuyển hướng login...");
-        // Nếu không phải là từ trang login, chuyển hướng đến login
-        if (from.name !== "login") {
-            return next({
-                name: "login", // Điều hướng về trang login
-            });
+    if (isLoggedIn || isOAuth) {
+        if (to.name == "login") {
+            next({ path: "/" })
+        } else {
+            let user = store.getters.user;
+
+            const hasRoles = user && user.roles && user.roles.length > 0;
+
+            if (hasRoles) {
+                next();
+            } else {
+                try {
+                    if (to.name == "oAuthCallback") {
+                        next();
+                    } else {
+                        store.dispatch("app/setLoading", true);
+                        await store.dispatch("auth/fetchUser");
+                        store.dispatch("app/setLoading", false);
+
+                        localStorage.removeItem(constants.LOCAL_STORAGE.OAUTH_IN_PROGRESS);
+
+                        next((window.location.pathname + window.location.search));
+                    }
+                } catch (error) {
+                    console.log("Lỗi xử lý phân quyền:", error);
+
+                    await store.dispatch("auth/resetAuthState");
+                    localStorage.removeItem(constants.LOCAL_STORAGE.OAUTH_IN_PROGRESS);
+
+                    next({ name: "login" });
+                }
+            }
         }
-        return;
-    }
-
-    // 2. Nếu đã đăng nhập và không có tiến trình OAuth, chuyển hướng đến dashboard khi cố gắng vào trang login
-    if (isLoggedIn && !isOAuth && to.name === "login") {
-        console.log("[Router] 🔄 Đã đăng nhập, chuyển hướng dashboard...");
-        // Nếu không phải là từ trang dashboard, chuyển hướng về dashboard
-        if (from.name !== "dashboard") {
-            return next({
-                name: "dashboard", // Điều hướng về trang dashboard
-            });
+    } else {
+        if (whiteList.indexOf(to.matched[0] ? to.matched[0].path : '') !== -1) {
+            next();
+        } else {
+            next({ name: "login" });
         }
-        return;
     }
-
-    // Nếu không có điều kiện nào được thỏa mãn, tiếp tục điều hướng bình thường
-    next();
 });

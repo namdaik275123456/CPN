@@ -56,7 +56,7 @@ export default {
                         name: "Đức Việt Vũ",
                         email: "vuducviet0131@gmail.com",
                         avatar: "https://lh3.googleusercontent.com/a/ACg8ocI-0lkf2NAOGdTgi8OvEfsIsNjsfFdkveWUE61H5lW8L9lZsymalg=s96-c",
-                        role: ["admin"], // Role của user
+                        roles: ["admin"], // Role của user
                         permissions: ["admin"], // Permissions của user
                     };
                 }

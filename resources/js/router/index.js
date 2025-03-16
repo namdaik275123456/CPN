@@ -8,13 +8,6 @@ Vue.use(VueRouter);
 
 // Routes cố định (không thay đổi, không phụ thuộc vào quyền người dùng)
 export const constantRoutes = [
-    // Route mặc định, chuyển hướng đến trang login nếu không tìm thấy route
-    {
-        path: "",
-        redirect: {
-            name: "login", // Redirect đến route login
-        },
-    },
     // Route cho trang đăng nhập
     {
         path: "/login",
@@ -37,6 +30,12 @@ export const constantRoutes = [
 
 // Routes động (tùy thuộc vào quyền người dùng, sẽ thay đổi)
 export const asyncRoutes = [
+    {
+        path: "",
+        redirect: {
+            name: "dashboard"
+        }
+    },
     {
         path: "/dashboard", // Route cho trang Dashboard
         name: "dashboard",

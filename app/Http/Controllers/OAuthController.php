@@ -30,7 +30,15 @@ class OAuthController extends Controller
             $data = $response->json();
 
             if (!isset($data['access_token'])) {
-                return response()->json(['error' => ('invalid_token: ' . env('GOOGLE_CLIENT_ID')), 'google_response' => $data], 400);
+                return response()->json([
+                    'error' => 'invalid_token',
+                    'google_response' => $data,
+                    'client_id' => env('GOOGLE_CLIENT_ID'),
+                    'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+                    'redirect_uri' => env('GOOGLE_REDIRECT_URI'),
+                    'grant_type' => 'authorization_code',
+                    'code' => $code,
+                ], 400);
             }
 
             $accessToken = $data['access_token'];
@@ -53,10 +61,10 @@ class OAuthController extends Controller
                     'name' => $user['name'] ?? null,
                     'email' => $user['email'],
                     'avatar' => $user['picture'] ?? null,
-                    'role' => ['admin'],
+                    'roles' => ['admin'],
                     'permission' => ['admin']
                 ]
-            ])->cookie('oauth_token', $accessToken, 60 * 24, '/', null, true, true, false, 'None');
+            ])->cookie('oauth_token', $accessToken, 10, '/', null, false, true, 'Lax');
         } catch (\Exception $e) {
             Log::error("Google OAuth Error: " . $e->getMessage());
             return response()->json(['error' => 'server_error'], 500);
